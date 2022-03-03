@@ -35,5 +35,21 @@ def extractincidents(data):
     # print(pagecount)
     final = []
 
+    # Get the first page
+    for eachpage in range(pagecount):
+        page = pdfReader.getPage(eachpage).extractText().replace(
+            "NORMAN POLICE DEPARTMENT", '').replace(
+            "Daily Incident Summary (Public)", '')
+        # print(eachpage)
+        date_regex = '(0[1-9]|1[0-2])[- /.](0[1-9]|1[0-9]|2[0-9]|3[0-1])[- /.](201[0-9]|202[0-9])/d/d'
+        mon = '([1-9]|1[0-2])'
+        date = '([1-9]|1[0-9]|2[0-9]|3[0-1])'
+        year = '(201[0-9]|202[0-9])'
+        hourReg = '( [0-9]| [1][0-9]| 2[0-3])'
+        minReg = '(:[0-5][0-9])'
+
+        pattern = re.compile(mon + '/' + date + '/' + year + hourReg + minReg)
+
+    #pattern = re.search(r'(0[1-9]|1[0-2])[/](0[1-9]|1[0-9]|2[0-9]|3[0-1])[/](201[0-9]|202[0-9])')
 
 
