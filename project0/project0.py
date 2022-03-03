@@ -80,3 +80,12 @@ def extractincidents(data):
     # print(final)
     final[-1].pop()
     return final
+
+
+def createdb():
+    connection = sqlite3.connect(r'normanpd.db')
+    cur = connection.cursor()
+    table = """ CREATE TABLE incidents(incident_time TEXT,incident_number TEXT,incident_location TEXT,nature TEXT,incident_ori TEXT)"""
+
+    cur.execute(table)
+    cur.execute("""DELETE FROM incidents""")
