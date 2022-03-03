@@ -89,3 +89,21 @@ def createdb():
 
     cur.execute(table)
     cur.execute("""DELETE FROM incidents""")
+
+
+def populatedb(db, final):
+    #import sqlite3
+    connection = sqlite3.connect(r'normanpd.db')
+    cur = connection.cursor()
+    for item in range(0, len(final)):
+        for record in final[item]:
+            # print(len(record.strip(',').split(',')),record.strip(','))
+            if(len(record.strip(',').split(',')) == 5):
+                temp = record.strip(',').split(',')
+                cur.execute("insert into incidents values (?,?,?,?,?)",
+                            (temp[0], temp[1], temp[2], temp[3], temp[4]))
+
+    connection.commit()
+
+    # for record in cur.execute("SELECT * FROM incidents"):
+    # print(record)
