@@ -72,12 +72,11 @@ def extractincidents(data):
                 '\n',
                 ',').strip(',').split(';'))
 
+    for h in final:
+        h.pop(0)
+        # print(h)
+        # print(final[0])
 
-       for h in final:
-                   h.pop(0)
-                           # print(h)
-                               # print(final[0])
-
-                                   # print(final)
-                                       final[-1].pop()
-                                           return final
+        # print(final)
+        final[-1].pop()
+        return final
