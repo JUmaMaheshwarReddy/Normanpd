@@ -107,3 +107,13 @@ def populatedb(db, final):
 
     # for record in cur.execute("SELECT * FROM incidents"):
     # print(record)
+
+
+def status(db):
+    import sqlite3
+    connection = sqlite3.connect(r'normanpd.db')
+    cur = connection.cursor()
+    for record in cur.execute(
+            "SELECT nature,COUNT(nature) FROM incidents GROUP BY nature ORDER BY COUNT(nature) DESC, nature ASC"):
+        # record.replace(',','|').slipt('\n')
+        print("{}{}{}".format(record[0], ' | ', record[1]))
