@@ -16,7 +16,8 @@ else:
 
 def fetchincidents(url):
 
-    #url = ("https://www.normanok.gov/sites/default/files/documents/2022-01/2022-01-01_daily_incident_summary.pdf")
+    # url =
+    # ("https://www.normanok.gov/sites/default/files/documents/2022-01/2022-01-01_daily_incident_summary.pdf")
     headers = {}
     headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"
     data = urllib.request.urlopen(
@@ -50,6 +51,24 @@ def extractincidents(data):
 
         pattern = re.compile(mon + '/' + date + '/' + year + hourReg + minReg)
 
-    #pattern = re.search(r'(0[1-9]|1[0-2])[/](0[1-9]|1[0-9]|2[0-9]|3[0-1])[/](201[0-9]|202[0-9])')
+    # pattern =
+    # re.search(r'(0[1-9]|1[0-2])[/](0[1-9]|1[0-9]|2[0-9]|3[0-1])[/](201[0-9]|202[0-9])')
 
-
+        res = pattern.findall(pdfReader.getPage(eachpage).extractText())
+        out = set()
+        for i in res:
+            i = '/'.join(i)
+            i = i.replace('/ ', ' ')
+            i = i.replace('/:', ':')
+            temp = ";" + i
+            if temp not in out:
+                out.add(temp)
+                page = page.replace(i, temp)
+                # print(page6)
+        final.append(
+            page.replace(
+                ' \n',
+                ' ').replace(
+                '\n',
+                ',').strip(',').split(';'))
+    
