@@ -29,3 +29,11 @@ def extractincidents(data):
     fp = tempfile.TemporaryFile()
     fp.write(data)
     fp.seek(0)
+
+    pdfReader = PyPDF2.pdf.PdfFileReader(fp)
+    pagecount = pdfReader.getNumPages()
+    # print(pagecount)
+    final = []
+
+
+
