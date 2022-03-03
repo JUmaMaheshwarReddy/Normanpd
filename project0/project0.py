@@ -23,3 +23,9 @@ def fetchincidents(url):
         urllib.request.Request(
             url, headers=headers)).read()
     return data
+
+
+def extractincidents(data):
+    fp = tempfile.TemporaryFile()
+    fp.write(data)
+    fp.seek(0)
