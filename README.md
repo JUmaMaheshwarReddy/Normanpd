@@ -1,8 +1,6 @@
-#CS5239sp22-Project0
+# CS5239sp22-Project0
 
----
-
-##Author
+## Author
 **J Uma Maheshwar Reddy**
 
 Author Email : umamaheshwarreddy.jangalapalli@ou.edu
@@ -11,15 +9,10 @@ Author Email : umamaheshwarreddy.jangalapalli@ou.edu
 Norman Police Department, Daily Incident Summary
 ===
 ---
-##Author
-**J Uma Maheshwar Reddy**
 
-Author Email : umamaheshwarreddy.jangalapalli@ou.edu
-
----
 ![alt_text](https://www.normanok.gov/sites/default/files/styles/logo/public/images/2022-02/Badge.JPG?itok=uYhj6VWe)
 
-#About
+# About
 
 The Norman, Oklahoma police department regularly reports cases.
 The website contains three types of summaries arrests,
