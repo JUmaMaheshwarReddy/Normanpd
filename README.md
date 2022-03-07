@@ -49,16 +49,18 @@ Norman police department,
 for this project i assumed that the fields are only 5 
 and also assuming that empty spaces in the pdf
 only occur in location and nature columns.
-Other assumption is case number is always numeric and nature is always alphabetic
+Other assumption is case number is always numeric and nature is always alphabetic.
 
-and the structure is in the form of :
-` CREATE TABLE incidents(
+structure is in the form of :
+``` 
+CREATE TABLE incidents(
             incident_time TEXT,
             incident_number TEXT,
             incident_location TEXT,
             nature TEXT,
             incident_ori TEXT
-); `
+); 
+```
 
 ---
 
