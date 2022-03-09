@@ -1,7 +1,7 @@
 # CS5239sp22-Project0
 
 ## Author
-**J Uma Maheshwar Reddy**
+**Jangalapalli Uma Maheshwar Reddy**
 
 Author Email : umamaheshwarreddy.jangalapalli@ou.edu
 
@@ -42,6 +42,7 @@ count(number of times it appeared) which is seperated by a pipe '` | `'.
 
 ## Structure
 ```
+cs5293sp22-project0/
 ├── COLLABORATORS
 ├── docs
 ├── LICENSE
@@ -50,6 +51,7 @@ count(number of times it appeared) which is seperated by a pipe '` | `'.
 │   ├── main.py
 │   └── project0.py
 ├── README.md
+├── normanpd.db
 ├── setup.cfg
 ├── setup.py
 └── tests
@@ -61,23 +63,19 @@ count(number of times it appeared) which is seperated by a pipe '` | `'.
 ## Assumptions
 After analyzing multiple incident reports provided by the
 Norman police department,
-for this project i assumed that the fields are only 5 
+for this project I assumed that the fields are only 5 
 and also assuming that empty spaces in the pdf
 only occur in location and nature columns.
 
 Other assumption is case number is always numeric and nature is always alphabetic.
 
-Assuming that every pdf has cloumn names.
+Assuming that every pdf has cloumn names and first page has heading `"NORMAN POLICE DEPARTMENT", "Daily Incident Summary (Public)"`.
 
-Assuming that the first page has heading `"NORMAN POLICE DEPARTMENT", "Daily Incident Summary (Public)"`.
-
-Assuming every row has date with time in the same(MM/DD/YYYY HOURS:MINS) format in every pdf.
-
-Assuming every pdf has date at the end.
+Assuming every row has date with time in the same(MM/DD/YYYY HOURS:MINS) format and every pdf has date at the end.
 
 structure is in the form of :
 ```
-CREATE TABLE incidents(
+CREATE TABLE IF NOT EXISTS incidents(
             incident_time TEXT,
             incident_number TEXT,
             incident_location TEXT,
@@ -188,11 +186,12 @@ This function returns a list of list.
 
 This method takes no parameter and it is used to create a database named `'normanpd.db'`
 and table named `'incidents'` in that database. 
+If the database has already exists table 'incidents' created it will not create again. 
 This method returns the database name.
 
 Below is the code for creating table:
 ```
-CREATE TABLE incidents(
+CREATE TABLE IF NOT EXISTS incidents(
             incident_time TEXT,
             incident_number TEXT,
             incident_location TEXT,
@@ -206,6 +205,7 @@ CREATE TABLE incidents(
 This method takes database name and 
 incidents list(returned from extractincidents) as parameters
 and inserts the data into database `normanpd.db` table `incidents`.
+Every time the code is run the records in incidents are deleted and new records are inserted.
 
 To insert the data into table we use:
 
@@ -280,7 +280,7 @@ In this project we want the nature type
 and its count(times it appeared) separated by `'|'`.
 It is displayed in decreasing order of count 
 and same count of natures should be arranged in alphabetic order `'A-z'`.
-
+It returns a stirng appended with all natures.
 ---
 ### Output:
 
@@ -303,6 +303,68 @@ python project0/main.py --incidents "url"
 python project0/main.py --incidents "https://www.normanok.gov/sites/default/files/documents/2022-02/2022-02-02_daily_incident_summary.pdf"
 ```
 ---
+
+### Test cases
+***test***
+
+The directory tests has two .py files(packages) with methods defined in them. 
+These are used for unit testing the methods defined in the package **project0.py**.
+
+
+***test/test_download.py/test_fetchincidents()***
+
+This method is used to test method **fetchincidents(url)** in project0.py. 
+In this, verifying if the object returned by 
+**project0.fetchincidents(url)** when it is called is not None or not.
+
+```
+url_link = "https://www.normanok.gov/sites/default/files/documents/2022-02/2022-02-02_daily_incident_summary.pdf"
+
+def test_fectincidents():
+    assert project0.fetchincidents(url_link) is not None
+```
+
+***test/test_fields***
+
+***test_extractincidents()***
+
+This method is used to test the method **extractincidents(incident_data)** in project0.py.
+In this, verifying if the object returned is whether list or not and
+its length is greater than 0 which means list is not empty.
+
+```
+    assert type(data_stored) == type([])
+    assert len(data_stored) > 0
+```
+
+***test_createdb()***
+
+This method is used to test method **createdb()** in project0.py.
+In this, verifying if the database is created or not.
+
+***test_populatedb()***
+
+This method is used to test method **populatedb(db,incidents)** in project0.py.
+In this, verifying if the all records are inserted into incidents table or not.
+By querying the table a random result is given.
+
+```
+    cur.execute("SELECT * FROM incidents ORDER BY RANDOM() LIMIT 1")
+
+    results = cur.fetchall()
+    assert results is not None
+```
+
+***test_statusdb()***
+
+This method is used to test method **statusdb(db)** in project0.py.
+In this, Verifying if the data displayed is a stirng or not.
+
+```
+assert type(randominfo)== type("")
+```
+
+---
 # External Resources
 ```
 https://pythonhosted.org/PyPDF2/PdfFileReader.html
@@ -312,6 +374,7 @@ https://docs.python.org/3.8/library/sqlite3.html
 https://stackoverflow.com/questions/8840303/urllib2-http-error-400-bad-request
 https://www.programcreek.com/python/example/83039/ssl._create_unverified_context
 https://www.normanok.gov/public-safety/police-department/crime-prevention-data/department-activity-reports
+https://sqlitebrowser.org/
 ```
 ---
 ### Bugs
@@ -328,12 +391,15 @@ To clean the data to get desired output, I hardcoded some cases, So the code can
 2. git clone "url".
 3. create directory project0 and cd into directory.
 4. create .py files named as main.py and project0.py.
-*vim main.py**
-5. similarl create tests files.
+**`vim main.py`**
+5. similarly create tests files.
 6. add file to git by git add file name and git commit.
-**git add main.py**
-**git commit -m "comment"**
-**git push origin main**
+
+**`git add main.py`**
+
+**`git commit -m "comment"`**
+
+**`git push origin main`**
 7. Use your git hub username and key token as password.
 
 ---
@@ -343,11 +409,11 @@ To clean the data to get desired output, I hardcoded some cases, So the code can
 **`mkdir Text_project0 && cd Text_project0`**
 2. Download the project from Github.
 3. cd into project directory `cs5293sp22-project0`.
-4. Install pipenv to create virtual environment.
+4. Install pipenv to create virtual environment and install python3.
 **pip install pipenv**
 5. install dependencies listed in **requirements.txt**.
-**pipenv install -r requirements.txt**
+**`pipenv install -r requirements.txt`**
 6. After installing dependencies successfully run the unit tests.
-**pipenv run pytest**
+**`pipenv run pytest`**
 7. After running the unit tests you can run the above mentioned how to run code changing the URL.
 ---
